@@ -1,11 +1,19 @@
 <template>
   <div>
-    <h1>My To Do</h1>
+    <Main></Main>
   </div>
 </template>
 
-<script>
-  export default {
+<script lang="ts">
+  import { Component, Vue } from 'vue-property-decorator';
+  import Main from './components/Main.vue';
+
+  @Component({
+    components: {
+      Main
+    }
+  })
+  export default class App extends Vue {
     
   }
 </script>
