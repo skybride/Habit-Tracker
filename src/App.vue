@@ -1,26 +1,22 @@
 <template>
-  <div>
-    <Main></Main>
-  </div>
+	<div>
+		<MainComponent></MainComponent>
+	</div>
 </template>
 
 <script lang="ts">
-  import { Component, Vue } from 'vue-property-decorator';
-  import Main from './components/Main.vue';
+import { Component, Vue } from "vue-property-decorator";
+import MainComponent from "./components/MainComponent.vue";
 
-  @Component({
-    components: {
-      Main
-    }
-  })
-  export default class App extends Vue {
-    
-  }
+@Component({
+	components: {
+		MainComponent,
+	},
+})
+export default class App extends Vue {}
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>
 
 <!-- <template>
   <div id="app">
