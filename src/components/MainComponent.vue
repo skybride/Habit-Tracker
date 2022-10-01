@@ -20,13 +20,15 @@
 </template>
 
 <script lang="ts">
+import { Component, Vue } from "vue-property-decorator";
 import HabitRow from "./HabitRow.vue";
 
-export default {
+@Component({
 	components: {
 		HabitRow,
 	},
-};
+})
+export default class MainComponent extends Vue {}
 </script>
 
 <style lang="css" scoped>
