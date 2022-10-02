@@ -6,13 +6,22 @@
 		</div>
 		<h1>Daily Habits</h1>
 		<div id="habit-main">
-			<HabitRow task="Wash Face" isChecked="true" />
+			<HabitRow
+				task="Wash Face"
+				:isChecked="isChecked"
+				:style="[
+					isStrikeActive
+						? { 'text-decoration': 'line-through' }
+						: { 'text-decoration': 'none' },
+				]"
+				@onCheck="onChecked"
+			/>
 			<HabitRow task="Brush Teeth"></HabitRow>
 			<HabitRow task="Drink Water"></HabitRow>
 			<HabitRow task="Drink Coffee"></HabitRow>
 		</div>
 		<div id="extra">
-			<span id="addTask">
+			<span id="addTask" @click="addNewTask()">
 				<i class="fa fa-plus-circle"></i>
 			</span>
 		</div>
@@ -28,7 +37,22 @@ import HabitRow from "./HabitRow.vue";
 		HabitRow,
 	},
 })
-export default class MainComponent extends Vue {}
+export default class MainComponent extends Vue {
+	// strikeClass = "strike";
+	isStrikeActive = true;
+	isChecked = true;
+
+	addNewTask() {
+		console.log("Add new task");
+	}
+
+	onChecked() {
+		console.log("message in parent", this.isChecked);
+		this.isChecked = !this.isChecked;
+		this.isStrikeActive = this.isChecked;
+		return this.isStrikeActive;
+	}
+}
 </script>
 
 <style lang="css" scoped>
@@ -46,5 +70,9 @@ export default class MainComponent extends Vue {}
 	font-size: 2em;
 	flex-direction: row;
 	justify-content: center;
+}
+
+.strike {
+	text-decoration: line-through;
 }
 </style>
