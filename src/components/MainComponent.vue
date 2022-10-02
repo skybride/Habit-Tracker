@@ -47,7 +47,7 @@ export default class MainComponent extends Vue {
 	}
 
 	onChecked() {
-		console.log("emitted stuff", this.isChecked);
+		console.log("message in parent", this.isChecked);
 		this.isChecked = !this.isChecked;
 		this.isStrikeActive = this.isChecked;
 		return this.isStrikeActive;
