@@ -23,7 +23,7 @@ export default class HabitRow extends Vue {
 
 	//should pass some boolean from a getter isComplete
 	completeTask() {
-		console.log("Strike through task");
+		console.log("isChecked");
 		this.$emit("onCheck");
 	}
 
