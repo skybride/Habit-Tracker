@@ -5,20 +5,16 @@
 			<span id="date">Date</span>
 		</div>
 		<h1>Daily Habits</h1>
-		<div id="habit-main">
+		<div id="habit-main" v-for="dailyHabit in dailyHabits">
 			<HabitRow
-				task="Wash Face"
-				:isChecked="isChecked"
-				:style="[
-					isStrikeActive
+				:task="dailyHabit.habit"
+				:style="
+					dailyHabit.done
 						? { 'text-decoration': 'line-through' }
-						: { 'text-decoration': 'none' },
-				]"
-				@onCheck="onChecked"
+						: { 'text-decoration': 'none' }
+				"
+				@onCheck="onChecked(dailyHabit.habit, dailyHabit.done)"
 			/>
-			<HabitRow task="Brush Teeth"></HabitRow>
-			<HabitRow task="Drink Water"></HabitRow>
-			<HabitRow task="Drink Coffee"></HabitRow>
 		</div>
 		<div id="extra">
 			<span id="addTask" @click="addNewTask()">
@@ -38,29 +34,39 @@ import HabitRow from "./HabitRow.vue";
 	},
 })
 export default class MainComponent extends Vue {
-	// strikeClass = "strike";
-	isStrikeActive = true;
-	isChecked = true;
+	isChecked = false;
+	dailyHabits = [
+		{ habit: "Wash Face", done: false },
+		{ habit: "Brush Teeth", done: false },
+		{ habit: "Drink Water", done: false },
+		{ habit: "Drink Coffee", done: false },
+	];
+
+	get strikeValue() {
+		return this.isChecked === true
+			? { "text-decoration": "line-through" }
+			: { "text-decoration": "none" };
+	}
 
 	addNewTask() {
 		console.log("Add new task");
 	}
 
-	onChecked() {
-		console.log("message in parent", this.isChecked);
-		this.isChecked = !this.isChecked;
-		this.isStrikeActive = this.isChecked;
-		return this.isStrikeActive;
+	onChecked(dailyHabit: string, done: boolean) {
+		done = !done;
+		this.isChecked = done;
+		this.dailyHabits.filter((value) => {
+			if (value.habit === dailyHabit) {
+				return (value.done = done);
+			}
+		});
+
+		return this.isChecked;
 	}
 }
 </script>
 
 <style lang="css" scoped>
-#habit-main {
-	padding: 1em;
-	margin: 1em;
-}
-
 #date {
 	float: right;
 }
