@@ -50,14 +50,13 @@ export default class MainComponent extends Vue {
 
 	onChecked(dailyHabit: string, done: boolean) {
 		done = !done;
-		this.isChecked = done;
 		this.dailyHabits.filter((value) => {
 			if (value.habit === dailyHabit) {
 				return (value.done = done);
 			}
 		});
 
-		return this.isChecked;
+		return done;
 	}
 }
 </script>
