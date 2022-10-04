@@ -7,12 +7,9 @@
 		<h1>Daily Habits</h1>
 		<div id="habit-main" v-for="dailyHabit in dailyHabits">
 			<HabitRow
+				:style="onStrike(dailyHabit.done)"
 				:task="dailyHabit.habit"
-				:style="
-					dailyHabit.done
-						? { 'text-decoration': 'line-through' }
-						: { 'text-decoration': 'none' }
-				"
+				:isChecked="dailyHabit.done"
 				@onCheck="onChecked(dailyHabit.habit, dailyHabit.done)"
 			/>
 		</div>
@@ -34,7 +31,6 @@ import HabitRow from "./HabitRow.vue";
 	},
 })
 export default class MainComponent extends Vue {
-	isChecked = false;
 	dailyHabits = [
 		{ habit: "Wash Face", done: false },
 		{ habit: "Brush Teeth", done: false },
@@ -42,8 +38,8 @@ export default class MainComponent extends Vue {
 		{ habit: "Drink Coffee", done: false },
 	];
 
-	get strikeValue() {
-		return this.isChecked === true
+	onStrike(done: boolean): { "text-decoration": string } {
+		return done === true
 			? { "text-decoration": "line-through" }
 			: { "text-decoration": "none" };
 	}
