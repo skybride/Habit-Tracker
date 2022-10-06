@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<div>
+		<div id="header">
 			<span id="time">Time</span>
 			<span id="date">Date</span>
 		</div>
@@ -62,11 +62,14 @@ export default class MainComponent extends Vue {
 </script>
 
 <style lang="css" scoped>
-#date {
-	float: right;
+#header {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
 }
 
 #addTask {
+	cursor: pointer;
 	display: flex;
 	font-size: 2em;
 	flex-direction: row;
