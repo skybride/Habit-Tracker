@@ -1,8 +1,8 @@
 <template>
 	<div>
 		<div id="header">
-			<span id="time">Time</span>
-			<span id="date">Date</span>
+			<span id="time">{{ hours }}:{{ minutes }}{{ amPm }}</span>
+			<span id="date">{{ currentDate }}</span>
 		</div>
 		<h1>Daily Habits</h1>
 		<div id="habit-main" v-for="dailyHabit in dailyHabits">
@@ -31,12 +31,58 @@ import HabitRow from "./HabitRow.vue";
 	},
 })
 export default class MainComponent extends Vue {
+	/**
+	 * Data Properties
+	 */
 	dailyHabits = [
 		{ habit: "Wash Face", done: false },
 		{ habit: "Brush Teeth", done: false },
 		{ habit: "Drink Water", done: false },
 		{ habit: "Drink Coffee", done: false },
 	];
+	hours = 0;
+	minutes = 0;
+	seconds = 0;
+	amPm = "";
+	interval = 0;
+	months = [
+		"Jan",
+		"Feb",
+		"Mar",
+		"Apr",
+		"May",
+		"Jun",
+		"Jul",
+		"Aug",
+		"Sep",
+		"Oct",
+		"Nov",
+		"Dec",
+	];
+	days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+
+	/**
+	 * Computed Properties
+	 */
+	get currentDate() {
+		const date = new Date();
+		const dayOfWeek = date.getDay();
+		const dayNumber = date.getDate();
+		const month = date.getMonth();
+
+		return `${this.days[dayOfWeek]}, ${this.months[month]} ${dayNumber}`;
+	}
+
+	/**
+	 * Methods
+	 */
+	mounted() {
+		this.interval = setInterval(this.updateClock, 1000);
+	}
+
+	beforeDestroy() {
+		clearInterval(this.interval);
+	}
 
 	onStrike(done: boolean): { "text-decoration": string } {
 		return done === true
@@ -57,6 +103,18 @@ export default class MainComponent extends Vue {
 		});
 
 		return done;
+	}
+
+	updateClock() {
+		const time = new Date();
+
+		this.hours = time.getHours();
+		this.minutes = time.getMinutes();
+		this.seconds = time.getSeconds();
+		this.amPm = this.hours >= 12 ? "PM" : "AM"; //make this small caps
+		this.hours = this.hours % 12 || 12;
+		this.minutes = this.minutes < 10 ? 0 + this.minutes : this.minutes;
+		this.hours = this.hours < 10 ? 0 + this.hours : this.hours;
 	}
 }
 </script>
